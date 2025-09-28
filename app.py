@@ -1,30 +1,38 @@
 #Trabalho de Python - E-commerce de Calçados
 
-import hashlib
-
 clientes_cadastrados = {}
 
 def cadastro_cliente(usuarios):
-    print('\nCadastre seu usuário aqui!\n')
-    email = input('Digite seu e-mail: ')
+    print('\n--- Cadastrando Usuário ---\n')
+    email = input('Digite seu E-mail: ')
     if email in usuarios:
-        print('Erro. Este e-mail já está cadastrado, tente o login.')
+        print('E-mail já cadastrado. Tente o login.')
         return
-    
-    senha = input('Digite sua senha: ')
-    nome = input('Digite seu nome completo: ')
-    senha_hash = hashlib.sha256(senha.encode()).hexdigest()
+    senha_cliente = input('Digite sua senha: ')
+    nome_cliente = input('Digite seu nome completo: ')
 
     usuarios[email] = {
-        'senha_hash': senha_hash,
-        'nome': nome
+            'senha': senha_cliente,
+            'nome': nome_cliente
     }
 
-    print(f'Usuário {nome} adicionado com sucesso!')
+    print(f'\nUsuário {nome_cliente} cadastrado com sucesso!')
 
 
 def login_cliente(usuarios):
-    print()
+    print('\n--- Página de Login ---\n')
+    email = input('Digite seu E-mail: ')
+    senha_cliente = input('Digite sua senha: ')
+
+    if email in usuarios:
+        senha_armazenada = usuarios[email]['senha']
+        if senha_cliente == senha_armazenada:
+            print(f'\nLogin efetuado com suceso! Bem-vindo(a) {usuarios[email]['nome']}')
+            return email
+    else:
+        print('\nE-mail ou senha incorretos.')
+        return None
+
     
 def navegacao_calcados():
     print()
@@ -50,7 +58,7 @@ while True:
         if selection == 1:
             cadastro_cliente(clientes_cadastrados)
         elif selection == 2:
-            login_cliente()
+            login_cliente(clientes_cadastrados)
         elif selection == 3:
             navegacao_calcados()
         elif selection == 4:
