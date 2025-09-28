@@ -44,4 +44,4 @@ while True:
             print('\nOpção inválida! Por favor, escolha um número entre 1 e 6.')
 
     except ValueError:
-        print('Entrada inválida! Por favor, digite apenas um número.')
+        print('\nEntrada inválida! Por favor, digite apenas um número.')
