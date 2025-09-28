@@ -1,9 +1,29 @@
 #Trabalho de Python - E-commerce de Calçados
 
-def cadastro_cliente():
-    print()
+import hashlib
 
-def login_cliente():
+clientes_cadastrados = {}
+
+def cadastro_cliente(usuarios):
+    print('\nCadastre seu usuário aqui!\n')
+    email = input('Digite seu e-mail: ')
+    if email in usuarios:
+        print('Erro. Este e-mail já está cadastrado, tente o login.')
+        return
+    
+    senha = input('Digite sua senha: ')
+    nome = input('Digite seu nome completo: ')
+    senha_hash = hashlib.sha256(senha.encode()).hexdigest()
+
+    usuarios[email] = {
+        'senha_hash': senha_hash,
+        'nome': nome
+    }
+
+    print(f'Usuário {nome} adicionado com sucesso!')
+
+
+def login_cliente(usuarios):
     print()
     
 def navegacao_calcados():
@@ -28,7 +48,7 @@ while True:
         selection = int(input('Selecione sua opção (1-6): '))
 
         if selection == 1:
-            cadastro_cliente()
+            cadastro_cliente(clientes_cadastrados)
         elif selection == 2:
             login_cliente()
         elif selection == 3:
