@@ -1,60 +1,69 @@
-from classes import Calcado
+from classes import Produto, Cliente
 
-def cadastrar_calcado(estoque):
+CATEGORIAS = ('TÊNIS DE CORRIDA', 'CHUTEIRA', 'TÊNIS DE VÔLEI', 'TÊNIS DE BASQUETE')
+MARCAS = ('NIKE', 'ADIDAS', 'ASICS', 'OLYMPIKUS', 'PUMA', 'NEW BALANCE', 'MIZUNO')
+
+def cadastrar_produto(estoque):
     try:
-        marca = input('Informe a marca: ').upper()
-        modelo = input('Informe o modelo: ')
-        tamanho = int(input('Informe o tamanho (32 a 45): '))
-        categoria = input('Informe a categoria: ').upper()
-        preco = float(input('Informe o preço: '))
+        marca = input("Marca: ").upper()
+        modelo = input("Modelo: ")
+        tamanho = int(input("Tamanho: "))
+        preco = float(input("Preço: "))
+        categoria = input("Categoria: ").upper()
 
-        novo_calcado = Calcado(marca, modelo, tamanho, preco, categoria)
-        novo_calcado.entrou_no_estoque(estoque)
-
-    except ValueError:
-        print('Erro: digite valores válidos (números em tamanho e preço).')
-
-def listar_calcados(estoque):
-    if not estoque:
-        print('Nenhum produto cadastrado.')
-    else:
-        for id_calcado, dados in estoque.items():
-            print(f'ID: {id_calcado} | Marca: {dados["marca"]} | Modelo: {dados["modelo"]} | '
-                  f'Tamanho: {dados["tamanho"]} | Categoria: {dados["categoria"]} | Preço: R${dados["preco"]:.2f}')
-
-def modificar_calcado(estoque):
-    try:
-        id_calcado = int(input('Informe o ID do produto a modificar: '))
-        if id_calcado not in estoque:
-            print('Produto não encontrado.')
+        if marca not in MARCAS:
+            print("Marca inválida.")
+            return
+        if categoria not in CATEGORIAS:
+            print("Categoria inválida.")
             return
 
-        marca = input('Nova marca: ').upper()
-        modelo = input('Novo modelo: ')
-        tamanho = int(input('Novo tamanho: '))
-        categoria = input('Nova categoria: ').upper()
-        preco = float(input('Novo preço: '))
-
-        estoque[id_calcado] = {
-            'marca': marca,
-            'modelo': modelo,
-            'tamanho': tamanho,
-            'categoria': categoria,
-            'preco': preco
-        }
-        print('Produto atualizado com sucesso.')
-
+        produto = Produto(marca, modelo, tamanho, preco, categoria)
+        estoque.append(produto)
+        print("Produto cadastrado com sucesso.")
     except ValueError:
-        print('Erro: valores inválidos. Certifique-se de digitar números para tamanho e preço.')
+        print("Erro: informe números válidos para tamanho e preço.")
 
-def deletar_calcado(estoque):
+
+def listar_produtos(estoque):
+    if not estoque:
+        print("Nenhum produto cadastrado.")
+    else:
+        for i, produto in enumerate(estoque, 1):
+            print(f"{i}. {produto}")
+
+
+def cadastrar_cliente(clientes):
+    nome = input("Nome do cliente: ")
+    email = input("Email do cliente: ")
+    cliente = Cliente(nome, email)
+    clientes.append(cliente)
+    print("Cliente cadastrado com sucesso.")
+
+
+def registrar_compra(clientes, estoque):
+    if not clientes or not estoque:
+        print("Necessário ter pelo menos 1 cliente e 1 produto.")
+        return
+
+    listar_produtos(estoque)
+
     try:
-        id_calcado = int(input('Informe o ID do produto a deletar: '))
-        if id_calcado in estoque:
-            del estoque[id_calcado]
-            print('Produto deletado com sucesso.')
-        else:
-            print('Produto não encontrado.')
-    except ValueError:
-        print('Erro: digite um número válido para o ID.')
+        id_cliente = int(input("Número do cliente (posição na lista): ")) - 1
+        id_produto = int(input("Número do produto: ")) - 1
 
+        cliente = clientes[id_cliente]
+        produto = estoque[id_produto]
+
+        cliente.registrar_compra(produto)
+        print(f"Compra registrada para {cliente.nome}.")
+    except (ValueError, IndexError):
+        print("Erro: índice inválido.")
+
+
+def listar_clientes(clientes):
+    if not clientes:
+        print("Nenhum cliente cadastrado.")
+    else:
+        for i, cliente in enumerate(clientes, 1):
+            print(f"{i}. {cliente.nome} - {cliente._email}")
