@@ -1,3 +1,18 @@
+class Pessoa:
+    def __init__(self, nome, idade):
+        self._nome = nome
+
+    @property
+    def nome(self):
+        return self._nome
+    
+    @nome.setter
+    def nome(self, novo_nome):
+        if len(novo_nome) < 2:
+            print("Nome inválido")
+        else:
+            self._nome = novo_nome
+
 class Calcado:
     def __init__(self, marca, modelo, tamanho, preco, categoria):
         self.marca = marca
