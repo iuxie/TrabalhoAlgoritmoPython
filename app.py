@@ -1,32 +1,31 @@
 import functions
 
-estoque = {}
-MARCAS = ['NIKE', 'ADIDAS', 'ASICS', 'OLYMPIKUS', 'PUMA', 'NEW BALANCE', 'MIZUNO']
-CATEGORIAS = ['TÊNIS DE CORRIDA', 'CHUTEIRA', 'TÊNIS DE VÔLEI', 'TÊNIS DE BASQUETE']
+estoque = []
+clientes = []
 
 while True:
-    print('\n--- PASSOS CALÇADOS ESPORTIVOS ---')
-    print('1. Cadastrar Produto')
-    print('2. Listar Produto')
-    print('3. Modificar Produto')
-    print('4. Deletar Produto')
-    print('5. Sair')
+    print("\n--- LOJA DE CALÇADOS ---")
+    print("1. Cadastrar produto")
+    print("2. Listar produtos")
+    print("3. Cadastrar cliente")
+    print("4. Registrar compra")
+    print("5. Listar clientes")
+    print("6. Sair")
 
-    opcao = input('Escolha uma opção: ')
+    opcao = input("Escolha uma opção: ")
 
     if opcao == '1':
-        functions.cadastrar_calcado(estoque)
+        functions.cadastrar_produto(estoque)
     elif opcao == '2':
-        functions.listar_calcados(estoque)
+        functions.listar_produtos(estoque)
     elif opcao == '3':
-        functions.modificar_calcado(estoque)
+        functions.cadastrar_cliente(clientes)
     elif opcao == '4':
-        functions.deletar_calcado(estoque)
+        functions.registrar_compra(clientes, estoque)
     elif opcao == '5':
-        print('Saindo do sistema.')
+        functions.listar_clientes(clientes)
+    elif opcao == '6':
+        print("Encerrando o sistema.")
         break
     else:
-        print('Opção inválida.')
-
-
-
+        print("Opção inválida.")

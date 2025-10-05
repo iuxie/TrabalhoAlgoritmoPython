@@ -5,11 +5,11 @@ class Pessoa:
     @property
     def nome(self):
         return self._nome
-    
+
     @nome.setter
     def nome(self, novo_nome):
         if len(novo_nome) < 2:
-            print("Nome inválido")
+            print("Nome inválido.")
         else:
             self._nome = novo_nome
 
@@ -18,7 +18,7 @@ class Cliente(Pessoa):
     def __init__(self, nome, email):
         super().__init__(nome)
         self._email = email
-        self.compras = []
+        self.compras = []  # lista de produtos comprados
 
     def registrar_compra(self, produto):
         self.compras.append(produto)
@@ -28,7 +28,7 @@ class Cliente(Pessoa):
             print("Nenhuma compra registrada.")
         else:
             for item in self.compras:
-                print(f"{item.marca} - {item.modelo} - {item.preco:.2f}")
+                print(f"{item.marca} - {item.modelo} - R${item.preco:.2f}")
 
 
 class Funcionario(Pessoa):
@@ -37,16 +37,16 @@ class Funcionario(Pessoa):
         self._cargo = cargo
 
     def __str__(self):
-        return f"Nome: {self.nome} | Cargo: {self._cargo}"
+        return f"Funcionário: {self.nome} | Cargo: {self._cargo}"
 
 
-class Calcado:
+class Produto:
     def __init__(self, marca, modelo, tamanho, preco, categoria):
-        self.marca = marca
-        self.modelo = modelo
-        self.tamanho = tamanho
-        self.preco = preco
-        self.categoria = categoria
+        self._marca = marca
+        self._modelo = modelo
+        self._tamanho = tamanho
+        self._preco = preco
+        self._categoria = categoria
 
     @property
     def preco(self):
