@@ -1,3 +1,5 @@
+from datetime import datetime
+
 class Pessoa:
     def __init__(self, nome):
         self._nome = nome
@@ -13,23 +15,17 @@ class Pessoa:
         else:
             self._nome = novo_nome
 
-
 class Cliente(Pessoa):
     def __init__(self, nome, email):
         super().__init__(nome)
         self._email = email
-        self.compras = []  # lista de produtos comprados
-
+        self.compras = [] 
     def registrar_compra(self, produto):
-        self.compras.append(produto)
-
-    def listar_compras(self):
-        if not self.compras:
-            print("Nenhuma compra registrada.")
-        else:
-            for item in self.compras:
-                print(f"{item.marca} - {item.modelo} - R${item.preco:.2f}")
-
+        compra_info = {
+            "data": datetime.now(),
+            "valor": produto.preco
+        }
+        self.compras.append(compra_info)
 
 class Funcionario(Pessoa):
     def __init__(self, nome, cargo):
@@ -38,7 +34,6 @@ class Funcionario(Pessoa):
 
     def __str__(self):
         return f"Funcionário: {self.nome} | Cargo: {self._cargo}"
-
 
 class Produto:
     def __init__(self, marca, modelo, tamanho, preco, categoria):
@@ -60,4 +55,4 @@ class Produto:
             self._preco = valor
 
     def __str__(self):
-        return f"{self._marca} - {self._modelo} ({self._categoria}) - Tam: {self._tamanho} - R${self._preco:.2f}"
+        return f"{self._marca} {self._modelo} ({self._categoria}) - Tam: {self._tamanho} - R${self._preco:.2f}"

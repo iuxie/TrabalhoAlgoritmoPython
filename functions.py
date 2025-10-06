@@ -6,16 +6,17 @@ MARCAS = ('NIKE', 'ADIDAS', 'ASICS', 'OLYMPIKUS', 'PUMA', 'NEW BALANCE', 'MIZUNO
 def cadastrar_produto(estoque):
     try:
         marca = input("Marca: ").upper()
+        if marca not in MARCAS:
+            print("Erro: Marca inválida.")
+            return
+
         modelo = input("Modelo: ")
         tamanho = int(input("Tamanho: "))
-        preco = float(input("Preço: "))
+        preco = float(input("Preço: R$ "))
         categoria = input("Categoria: ").upper()
-
-        if marca not in MARCAS:
-            print("Marca inválida.")
-            return
+        
         if categoria not in CATEGORIAS:
-            print("Categoria inválida.")
+            print("Erro: Categoria inválida.")
             return
 
         produto = Produto(marca, modelo, tamanho, preco, categoria)
@@ -26,11 +27,13 @@ def cadastrar_produto(estoque):
 
 
 def listar_produtos(estoque):
+    print("\n--- LISTA DE PRODUTOS ---")
     if not estoque:
         print("Nenhum produto cadastrado.")
     else:
         for i, produto in enumerate(estoque, 1):
             print(f"{i}. {produto}")
+    print("-------------------------")
 
 
 def cadastrar_cliente(clientes):
@@ -45,25 +48,63 @@ def registrar_compra(clientes, estoque):
     if not clientes or not estoque:
         print("Necessário ter pelo menos 1 cliente e 1 produto.")
         return
-
-    listar_produtos(estoque)
-
+        
+    listar_clientes(clientes)
     try:
         id_cliente = int(input("Número do cliente (posição na lista): ")) - 1
-        id_produto = int(input("Número do produto: ")) - 1
-
         cliente = clientes[id_cliente]
-        produto = estoque[id_produto]
-
-        cliente.registrar_compra(produto)
-        print(f"Compra registrada para {cliente.nome}.")
     except (ValueError, IndexError):
-        print("Erro: índice inválido.")
+        print("Erro: ID de cliente inválido.")
+        return
+
+    listar_produtos(estoque)
+    try:
+        id_produto = int(input("Número do produto: ")) - 1
+        produto = estoque[id_produto]
+    except (ValueError, IndexError):
+        print("Erro: ID de produto inválido.")
+        return
+
+    cliente.registrar_compra(produto)
+    print(f"\n>> Compra registrada para {cliente.nome}. <<")
 
 
 def listar_clientes(clientes):
+    print("\n--- LISTA DE CLIENTES ---")
     if not clientes:
         print("Nenhum cliente cadastrado.")
     else:
         for i, cliente in enumerate(clientes, 1):
             print(f"{i}. {cliente.nome} - {cliente._email}")
+    print("-------------------------")
+
+def visualizar_compra(clientes):
+   
+   
+    if not clientes:
+        print("Nenhum cliente cadastrado para buscar.")
+        return
+
+    nome_busca = input("Nome do cliente que deseja visualizar: ")
+    email_busca = input("Email do mesmo cliente: ")
+
+    cliente_encontrado = None
+   
+    for cliente in clientes:
+        if cliente.nome.lower() == nome_busca.lower() and cliente._email.lower() == email_busca.lower():
+            cliente_encontrado = cliente
+            break
+
+    if cliente_encontrado:
+        print(f"\n--- Histórico de Compras de {cliente_encontrado.nome} ---")
+        if not cliente_encontrado.compras:
+            print("Este cliente ainda não realizou compras.")
+        else:
+            # Itera sobre o histórico e exibe cada compra formatada
+            for compra in cliente_encontrado.compras:
+                data_formatada = compra['data'].strftime('%d/%m/%Y às %H:%M:%S')
+                valor = compra['valor']
+                print(f"Data: {data_formatada} - Valor: R$ {valor:.2f}")
+        print("-------------------------------------------------")
+    else:
+        print("\nErro: Cliente não encontrado com os dados informados.")
