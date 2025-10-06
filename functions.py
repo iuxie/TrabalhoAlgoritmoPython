@@ -5,26 +5,29 @@ MARCAS = ('NIKE', 'ADIDAS', 'ASICS', 'OLYMPIKUS', 'PUMA', 'NEW BALANCE', 'MIZUNO
 
 def cadastrar_produto(estoque):
     try:
-        marca = input("Marca: ").upper()
+        print(f"\nMarcas disponíveis: {', '.join(MARCAS)}")
+        marca = input("Digite a marca do produto: ").strip().upper() # .strip() adicionado
+
         if marca not in MARCAS:
-            print("Erro: Marca inválida.")
+            print("\nErro: Marca inválida. Por favor, escolha uma das opções acima.")
             return
 
         modelo = input("Modelo: ")
-        tamanho = int(input("Tamanho: "))
+        tamanho = int(input("Tamanho (número): "))
         preco = float(input("Preço: R$ "))
-        categoria = input("Categoria: ").upper()
-        
+
+        print(f"\nCategorias disponíveis: {', '.join(CATEGORIAS)}")
+        categoria = input("Digite a categoria do produto: ").strip().upper() # .strip() adicionado
+
         if categoria not in CATEGORIAS:
-            print("Erro: Categoria inválida.")
+            print("\nErro: Categoria inválida. Por favor, escolha uma das opções acima.")
             return
 
         produto = Produto(marca, modelo, tamanho, preco, categoria)
         estoque.append(produto)
-        print("Produto cadastrado com sucesso.")
+        print("\n>> Produto cadastrado com sucesso! <<")
     except ValueError:
-        print("Erro: informe números válidos para tamanho e preço.")
-
+        print("\nErro: Informe um número válido para tamanho e/ou preço.")
 
 def listar_produtos(estoque):
     print("\n--- LISTA DE PRODUTOS ---")
