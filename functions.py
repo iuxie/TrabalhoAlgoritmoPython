@@ -40,8 +40,8 @@ def listar_produtos(estoque):
 
 
 def cadastrar_cliente(clientes):
-    nome = input("Nome do cliente: ")
-    email = input("Email do cliente: ")
+    nome = input("Nome do cliente: ").strip()
+    email = input("Email do cliente: ").strip()
     cliente = Cliente(nome, email)
     clientes.append(cliente)
     print("Cliente cadastrado com sucesso.")
@@ -82,17 +82,19 @@ def listar_clientes(clientes):
     print("-------------------------")
 
 def visualizar_compra(clientes):
-   
-   
+    """
+    Pede o nome e email de um cliente e exibe o histórico de compras dele,
+    mostrando a data e o valor de cada transação.
+    """
     if not clientes:
         print("Nenhum cliente cadastrado para buscar.")
         return
 
-    nome_busca = input("Nome do cliente que deseja visualizar: ")
-    email_busca = input("Email do mesmo cliente: ")
+    nome_busca = input("Nome do cliente que deseja visualizar: ").strip()
+    email_busca = input("Email do mesmo cliente: ").strip()
 
     cliente_encontrado = None
-   
+
     for cliente in clientes:
         if cliente.nome.lower() == nome_busca.lower() and cliente._email.lower() == email_busca.lower():
             cliente_encontrado = cliente
@@ -108,5 +110,6 @@ def visualizar_compra(clientes):
                 valor = compra['valor']
                 print(f"Data: {data_formatada} - Valor: R$ {valor:.2f}")
         print("-------------------------------------------------")
+    
     else:
         print("\nErro: Cliente não encontrado com os dados informados.")
