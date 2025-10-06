@@ -6,7 +6,7 @@ MARCAS = ('NIKE', 'ADIDAS', 'ASICS', 'OLYMPIKUS', 'PUMA', 'NEW BALANCE', 'MIZUNO
 def cadastrar_produto(estoque):
     try:
         print(f"\nMarcas disponíveis: {', '.join(MARCAS)}")
-        marca = input("Digite a marca do produto: ").strip().upper() # .strip() adicionado
+        marca = input("Digite a marca do produto: ").strip().upper() 
 
         if marca not in MARCAS:
             print("\nErro: Marca inválida. Por favor, escolha uma das opções acima.")
@@ -17,7 +17,7 @@ def cadastrar_produto(estoque):
         preco = float(input("Preço: R$ "))
 
         print(f"\nCategorias disponíveis: {', '.join(CATEGORIAS)}")
-        categoria = input("Digite a categoria do produto: ").strip().upper() # .strip() adicionado
+        categoria = input("Digite a categoria do produto: ").strip().upper() 
 
         if categoria not in CATEGORIAS:
             print("\nErro: Categoria inválida. Por favor, escolha uma das opções acima.")
@@ -103,7 +103,6 @@ def visualizar_compra(clientes):
         if not cliente_encontrado.compras:
             print("Este cliente ainda não realizou compras.")
         else:
-            # Itera sobre o histórico e exibe cada compra formatada
             for compra in cliente_encontrado.compras:
                 data_formatada = compra['data'].strftime('%d/%m/%Y às %H:%M:%S')
                 valor = compra['valor']
