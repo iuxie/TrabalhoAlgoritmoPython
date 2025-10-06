@@ -4,7 +4,7 @@ estoque = []
 clientes = []
 
 while True:
-    print("\n--- LOJA DE CALÇADOS ---")
+    print("\n--- PASSOS CALÇADOS ESPORTIVOS ---")
     print("1. Cadastrar produto")
     print("2. Listar produtos")
     print("3. Cadastrar cliente")
